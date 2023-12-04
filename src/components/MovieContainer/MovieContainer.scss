@@ -1,0 +1,21 @@
+.movie-container{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    box-sizing: border-box;
+    .movie {
+        background: #ffffff;
+        box-sizing: border-box;
+        box-shadow: 1px 1px 3px 1px #ebebeb;
+        display: flex;
+        font-family: montserrat;
+        height: 210px;
+        justify-content: center;
+    }
+    .movie-loading{
+        border: 1px solid black;
+        border-radius: 5px;
+        height: 200px;
+        width: 200px;
+    }
+}

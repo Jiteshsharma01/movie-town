@@ -1,0 +1,27 @@
+@import "../../App.scss";
+
+.header-box{
+    padding: 2%;
+    position: sticky;
+    top: 0;
+    z-index: 9;
+    .genre-list-box{
+        display: flex;
+        align-items: center;
+        overflow-y: scroll;
+        gap: 10px;
+        margin-top: 0.75rem;
+        .genre-btn{
+            background-color: $clr-gray;
+            border: none;
+            border-radius: 4px;
+            color: $clr-white;
+            font-size: 14px;
+            letter-spacing: 1px;
+            padding: 6px 10px;
+        }
+        .active-genre{
+            background-color: $clr-primary;
+        }
+    }
+}
