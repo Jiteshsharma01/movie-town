@@ -1,12 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "./Header/Header";
+import Header from "../Header/Header";
+import "./index.scss";
 
 const Body = () => {
   return (
-    <div className="flex flex-column">
+    <div className="main-box flex flex-column">
       <Header />
-      <div className="flex p-2">
+      <div className="bg-dark2 text-white flex p-2">
         <Outlet />
       </div>
     </div>

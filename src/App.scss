@@ -7,6 +7,10 @@
   scroll-behavior: smooth;
 }
 
+#root {
+    font-family: 'Archivo', sans-serif;
+}
+
 // variables
 $clr-black: #000;
 $clr-white: #fff;
@@ -16,6 +20,7 @@ $clr-light-gray: #F2F2F2;
 $clr-light: #F4F4F4;
 $clr-whitesmoke: #F5F5F5;
 $clr-dark: #242424;
+$clr-dark2: #424242;
 $clr-danger: #DC3545;
 $clr-gray: #929292;
 $clr-blue: #2873f0;
@@ -72,6 +77,7 @@ $clr-primary: #F0283C;
     &-black{background-color: $clr-black;}
     &-whitesmoke{background-color: $clr-whitesmoke;}
     &-dark{background-color: $clr-dark;}
+    &-dark2{background-color: $clr-dark2;}
     &-danger{background-color: $clr-danger;}
     &-gray{background-color: $clr-gray;}
 }

@@ -23,7 +23,6 @@ const Header = () => {
       axios
         .get(url, options)
         .then((response) => {
-          console.log("lkdnlf", response);
           setGenresList(response?.data?.genres);
         })
         .catch((error) => {
