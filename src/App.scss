@@ -32,6 +32,7 @@ $clr-primary: #F0283C;
     display: flex;
     &-column{ flex-direction: column;}
     &-wrap{flex-wrap: wrap;}
+    &-auto{ flex: auto; }
 }
 .align{
     &-center{align-items: center;}

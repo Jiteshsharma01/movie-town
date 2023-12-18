@@ -2,6 +2,8 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import './App.scss';
 import Body from './components/Body/Body';
 import MainContainer from './components/Body/MainContainer';
+import { store } from "./utils/store";
+import { Provider } from 'react-redux';
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -13,7 +15,9 @@ const appRouter = createBrowserRouter(
 
 function App() {
   return (
-    <RouterProvider router={appRouter} />
+    <Provider store={store}>
+      <RouterProvider router={appRouter} />
+    </Provider>
   );
 }
 

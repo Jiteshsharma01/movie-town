@@ -15,7 +15,7 @@ const MovieCard = ({ info }) => {
   return (
     <div className="movie-box">
       <img
-        src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
+        src={`https://image.tmdb.org/t/p/original${poster_path ? poster_path : backdrop_path}`}
         loading="lazy"
         alt={title}
         className="movie-img"

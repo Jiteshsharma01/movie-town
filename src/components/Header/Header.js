@@ -3,10 +3,14 @@ import AppLogo from "../../assets/images/app-logo.png";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../../utils/apiURL";
 import "./Header.scss";
+import SearchBox from "./SearchBox";
+import { useDispatch } from "react-redux";
+import { addMovie, clearMovie } from "../../utils/movieSlice";
 
 const Header = () => {
   const [genreList, setGenresList] = useState([]);
   const [activeGenre, setActiveGenre] = useState("All");
+  const dispatch = useDispatch();
 
   const fetchGenres = async () => {
     try {
@@ -19,11 +23,9 @@ const Header = () => {
           accept: "application/json",
         },
       };
-
-      axios
-        .get(url, options)
+      axios.get(url, options)
         .then((response) => {
-          setGenresList(response?.data?.genres);
+          setGenresList(response?.data?.genres?.slice(0, 10));
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -35,19 +37,64 @@ const Header = () => {
     fetchGenres();
   }, []);
 
-  const getMovieByGenre = (genre) => {
-    setActiveGenre(genre);
+  const fetchMovie = async () => {
+    try {
+      const year = 2012;
+      const response = await axios.get(
+        `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100`
+      );
+      let movieData = {
+        [year]: response?.data?.results,
+      };
+      dispatch(addMovie(movieData));
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
   };
+
+  const fetchMovieByGenre = async (genreData) => {
+    dispatch(clearMovie());
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreData}`
+      );
+      let movieData = {
+        [genreData]: response?.data?.results,
+      };
+      dispatch(addMovie(movieData));
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
+  const getMovieByGenre = (genre) => {
+    let genreData = {};
+    if(genre === "All"){
+      fetchMovie();
+      genreData = {
+        id: "All",
+        name: "All"
+      };
+    } else {
+      genreData = {...genre};
+      fetchMovieByGenre(genre);
+    }
+    setActiveGenre(genreData);
+    localStorage.setItem("activeGenre", JSON.stringify(genre));
+  };
+
+  console.log("kjsbd", activeGenre);
 
   return (
     <div className="header-box bg-dark">
       <div>
         <img src={AppLogo} alt="app-logo" />
       </div>
+      <SearchBox />
       <div className="genre-list-box">
         <button
-          className={`genre-btn ${activeGenre === "All" ? "active-genre" : ""}`}
-          onClick={() => getMovieByGenre()}
+          className={`genre-btn ${activeGenre?.id === "All" ? "active-genre" : ""}`}
+          onClick={() => getMovieByGenre("All")}
         >
           All
         </button>
@@ -55,10 +102,10 @@ const Header = () => {
           return (
             <button
               className={`genre-btn ${
-                activeGenre === genre?.name ? "active-genre" : ""
+                activeGenre?.id === genre?.id ? "active-genre" : ""
               }`}
               key={genre?.id}
-              onClick={() => getMovieByGenre()}
+              onClick={() => getMovieByGenre(genre)}
             >
               {genre?.name}
             </button>

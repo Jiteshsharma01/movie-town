@@ -7,7 +7,7 @@ const Body = () => {
   return (
     <div className="main-box flex flex-column">
       <Header />
-      <div className="bg-dark2 text-white flex p-2">
+      <div className="bg-dark2 text-white flex p-2 flex-auto">
         <Outlet />
       </div>
     </div>
