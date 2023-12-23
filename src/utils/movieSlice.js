@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const movieSlice = createSlice({
   name: "movieList",
   initialState: {
-    movieData: {}
+    movieData: {},
+    filterData: {},
   },
   reducers: {
     addMovie: (state, action) => {
@@ -11,9 +12,16 @@ const movieSlice = createSlice({
     },
     clearMovie: (state) => {
       state.movieData = {};
-    }
+    },
+    clearFilteredMovie: (state) => {
+      state.filterData = {};
+    },
+    filterMovie: (state, action) => {
+      state.filterData = action.payload;
+    },
   },
 });
 
-export const { addMovie, clearMovie } = movieSlice.actions;
+export const { addMovie, clearMovie, clearFilteredMovie, filterMovie } =
+  movieSlice.actions;
 export default movieSlice.reducer;

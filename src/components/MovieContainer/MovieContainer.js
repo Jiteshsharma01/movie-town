@@ -4,74 +4,102 @@ import "./MovieContainer.scss";
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import MovieList, { MovieListShimmer } from "./MovieList";
 import { useSelector } from "react-redux";
+import FilterMovies from "./FilterMovies";
 
 const MovieContainer = () => {
   const [movieYear, setMovieYear] = useState(2012);
   const [limit, setLimit] = useState(10);
   const [skip, setSkip] = useState(0);
-  
-  const movies = useSelector(store => store?.movieList?.movieData);
-  
-  const { loading, error, hasMore, movieList, yearWiseData } = useInfiniteScroll(limit, skip, movieYear);
 
-  const [yearWiseMovies, setYearWiseMovies] = useState(movies);
-  
-  useEffect(() => {
-    // let _data = {};
-    // if(Object.keys(movies).length){
-    //   _data = {...movies};
-    // }
-    // setYearWiseMovies({..._data, ...yearWiseData});
-    setYearWiseMovies(yearWiseData);
-  }, [yearWiseData]);
+  const movies = useSelector((store) => store?.movieList?.movieData);
+  const filterMovies = useSelector((store) => store?.movieList?.filterData);
+  const movi = useSelector((store) => store?.movieList);
+
+  const { loading, error, hasMore, movieList, yearWiseData } =
+    useInfiniteScroll(limit, skip, movieYear);
+
+  const [yearWiseMovies, setYearWiseMovies] = useState(movies ?? {});
+  const [filteredMovies, setFilteredMovies] = useState(filterMovies ?? []);
+
+  // useEffect(() => {
+  //   setYearWiseMovies(yearWiseData);
+  // }, [yearWiseData]);
 
   useEffect(() => {
-    let _data = {};
-    if(Object.keys(movies).length){
-      _data = {...movies};
+    let _data;
+    if (Object.keys(movies).length) {
+      _data = { ...movies };
+      setYearWiseMovies(_data);
+      setFilteredMovies([]);
+    } else if (filterMovies.length) {
+      _data = [...filterMovies];
+      setFilteredMovies(_data);
+      setYearWiseMovies({});
+    } else {
+      setYearWiseMovies({});
+      setFilteredMovies([]);
     }
-    setYearWiseMovies(_data);
-  }, [movies]);
-
-  console.log("sknsd", movies, yearWiseMovies);
+  }, [movies, filterMovies]);
 
   const firstMovieElementRef = useRef();
   const observer = useRef();
-  const lastMovieElementRef = useCallback(node => {
-    if (loading) return;
-    if (observer?.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
-      if(entries[0].isIntersecting && hasMore){
-        setMovieYear(prevYear => prevYear + 1);
-      }
-    })
-    if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
-  
+  const lastMovieElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer?.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setMovieYear((prevYear) => prevYear + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
+  if (filteredMovies?.length === 0 && Object.keys(yearWiseMovies)?.length === 0)
+    return <h4 className="fs-16 my-3 ls-1">No movies found!!!</h4>;
+
   return (
     <div className="movie-container flex flex-column">
-      { yearWiseMovies && Object.keys(yearWiseMovies)?.map((key) => {
-        return (
-          <MovieList 
-            key={key}
-            movieYear={key}
-            limit={limit}
-            skip={skip}
-            yearWiseMovies={yearWiseMovies}
-            setYearWiseMovies={setYearWiseMovies}
-            firstMovieElementRef={firstMovieElementRef} 
-            lastMovieElementRef={lastMovieElementRef} 
-            movieList={yearWiseMovies[key]} 
-          />
-          // {/* <MovieList 
-          // movieYear={2021} 
-          // firstMovieElementRef={firstMovieElementRef} 
-          // lastMovieElementRef={lastMovieElementRef} 
-          // movieList={movieData} 
-          // /> */}
-        )
-      })}
-      {loading && <MovieListShimmer cardsCount={10} />}
+      <>
+        {yearWiseMovies &&
+          Object.keys(yearWiseMovies)?.map((key) => {
+            return (
+              <MovieList
+                key={key}
+                movieYear={key}
+                limit={limit}
+                skip={skip}
+                yearWiseMovies={yearWiseMovies}
+                setYearWiseMovies={setYearWiseMovies}
+                firstMovieElementRef={firstMovieElementRef}
+                lastMovieElementRef={lastMovieElementRef}
+                movieList={yearWiseMovies[key]}
+              />
+            );
+          })}
+      </>
+      <>
+        {filteredMovies?.length &&
+          filteredMovies?.map((item, index) => {
+            return (
+              <div className="flex flex-column movie-list-box">
+                <h2 className="movie-year fs-20 my-3">Filter Movies</h2>
+                <FilterMovies
+                  key={index}
+                  lastMovieElementRef={lastMovieElementRef}
+                  movieList={filteredMovies}
+                />
+              </div>
+            );
+          })}
+      </>
+      {loading &&
+        filteredMovies?.length === 0 &&
+        Object.keys(yearWiseMovies)?.length === 0 && (
+          <MovieListShimmer cardsCount={10} />
+        )}
     </div>
   );
 };

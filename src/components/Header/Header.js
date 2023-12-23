@@ -5,12 +5,21 @@ import { API_KEY, BASE_URL } from "../../utils/apiURL";
 import "./Header.scss";
 import SearchBox from "./SearchBox";
 import { useDispatch } from "react-redux";
-import { addMovie, clearMovie } from "../../utils/movieSlice";
+import {
+  addMovie,
+  clearFilteredMovie,
+  clearMovie,
+  filterMovie,
+} from "../../utils/movieSlice";
 
 const Header = () => {
   const [genreList, setGenresList] = useState([]);
-  const [activeGenre, setActiveGenre] = useState("All");
+  const [activeGenre, setActiveGenre] = useState({});
   const dispatch = useDispatch();
+  const initialGenreData = {
+    id: "All",
+    name: "All",
+  };
 
   const fetchGenres = async () => {
     try {
@@ -23,7 +32,8 @@ const Header = () => {
           accept: "application/json",
         },
       };
-      axios.get(url, options)
+      axios
+        .get(url, options)
         .then((response) => {
           setGenresList(response?.data?.genres?.slice(0, 10));
         })
@@ -34,6 +44,8 @@ const Header = () => {
   };
 
   useEffect(() => {
+    setActiveGenre(initialGenreData);
+    localStorage.setItem("activeGenre", JSON.stringify(initialGenreData));
     fetchGenres();
   }, []);
 
@@ -54,36 +66,36 @@ const Header = () => {
 
   const fetchMovieByGenre = async (genreData) => {
     dispatch(clearMovie());
+    const { id } = genreData;
     try {
       const response = await axios.get(
-        `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreData}`
+        `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&sort_by=release_date.desc&page=1&with_genres=${id}`
       );
       let movieData = {
-        [genreData]: response?.data?.results,
+        ...response?.data?.results,
       };
-      dispatch(addMovie(movieData));
+      // let movieData = {
+      //   [id]: response?.data?.results,
+      // };
+      // dispatch(addMovie(movieData));
+      dispatch(filterMovie(movieData));
+      dispatch(clearMovie());
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   };
 
   const getMovieByGenre = (genre) => {
-    let genreData = {};
-    if(genre === "All"){
-      fetchMovie();
-      genreData = {
-        id: "All",
-        name: "All"
-      };
-    } else {
-      genreData = {...genre};
-      fetchMovieByGenre(genre);
-    }
-    setActiveGenre(genreData);
+    setActiveGenre(genre);
     localStorage.setItem("activeGenre", JSON.stringify(genre));
+    if (genre?.id === "All") {
+      fetchMovie();
+      dispatch(clearFilteredMovie());
+    } else {
+      fetchMovieByGenre(genre);
+      dispatch(clearMovie());
+    }
   };
-
-  console.log("kjsbd", activeGenre);
 
   return (
     <div className="header-box bg-dark">
@@ -93,8 +105,10 @@ const Header = () => {
       <SearchBox />
       <div className="genre-list-box">
         <button
-          className={`genre-btn ${activeGenre?.id === "All" ? "active-genre" : ""}`}
-          onClick={() => getMovieByGenre("All")}
+          className={`genre-btn ${
+            activeGenre?.id === "All" ? "active-genre" : ""
+          }`}
+          onClick={() => getMovieByGenre(initialGenreData)}
         >
           All
         </button>
