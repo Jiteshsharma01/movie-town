@@ -61,7 +61,7 @@ const MovieContainer = () => {
     return <h4 className="fs-16 my-3 ls-1">No movies found!!!</h4>;
 
   return (
-    <div className="movie-container flex flex-column">
+    <div className="movie-container flex flex-column p-2">
       <>
         {yearWiseMovies &&
           Object.keys(yearWiseMovies)?.map((key) => {
@@ -81,7 +81,7 @@ const MovieContainer = () => {
           })}
       </>
       <>
-        {filteredMovies?.length &&
+        {filteredMovies?.length > 0 &&
           filteredMovies?.map((item, index) => {
             return (
               <div className="flex flex-column movie-list-box">

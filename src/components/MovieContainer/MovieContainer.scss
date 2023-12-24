@@ -1,12 +1,10 @@
 .movie-container {
   .movie-list-box {
-    .movie-year {
-    }
     .movie-data-list {
       display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       box-sizing: border-box;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
     }
   }
   .movie {
@@ -17,5 +15,15 @@
     border: 1px solid black;
     border-radius: 5px;
     height: 200px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .movie-list-box {
+    padding: 1rem 1.5rem;
+    .movie-data-list {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+      gap: 2rem !important;
+    }
   }
 }

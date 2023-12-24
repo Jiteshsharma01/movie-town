@@ -1,0 +1,61 @@
+.movie-detail-box {
+  gap: 1rem;
+  .company-logo {
+    background: white;
+    height: fit-content;
+    padding: 2px 2px 0;
+  }
+  .desc-box {
+    gap: 1rem;
+    .movie-desc {
+      gap: 10px;
+      .genre-box,
+      .lang-box,
+      .overview-box {
+        font-size: 0.85rem;
+        span {
+          margin: 0 2px;
+        }
+      }
+      .overview-box {
+        line-height: 15px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .movie-detail-box {
+    .img-box {
+      position: absolute;
+      opacity: 0.4;
+      height: 100vh;
+      width: 100%;
+      .movie-img {
+        height: 100%;
+      }
+    }
+    .desc-box {
+      width: 50%;
+      position: absolute;
+      bottom: 4%;
+      left: 1%;
+      .company-logo {
+        background-image: linear-gradient(90deg, #5e5d5d91, transparent);
+        background: none;
+        width: 70%;
+      }
+      .movie-desc {
+        .movie-title {
+          font-size: 2rem;
+        }
+        .genre-box {
+          font-size: 1rem;
+        }
+        .overview-box {
+          line-height: 1.3rem;
+        }
+      }
+    }
+  }
+}

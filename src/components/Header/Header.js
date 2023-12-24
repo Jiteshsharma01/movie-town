@@ -11,8 +11,10 @@ import {
   clearMovie,
   filterMovie,
 } from "../../utils/movieSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [genreList, setGenresList] = useState([]);
   const [activeGenre, setActiveGenre] = useState({});
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const Header = () => {
       axios
         .get(url, options)
         .then((response) => {
-          setGenresList(response?.data?.genres?.slice(0, 10));
+          setGenresList(response?.data?.genres);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -99,7 +101,7 @@ const Header = () => {
 
   return (
     <div className="header-box bg-dark">
-      <div>
+      <div onClick={() => navigate("/")}>
         <img src={AppLogo} alt="app-logo" />
       </div>
       <SearchBox />
