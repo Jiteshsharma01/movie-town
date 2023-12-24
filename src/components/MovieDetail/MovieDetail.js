@@ -31,7 +31,7 @@ const MovieDetail = () => {
           <img
             alt="movie-img"
             className="movie-img w-full"
-            src={`https://image.tmdb.org/t/p/original${movieData?.poster_path}`}
+            src={`https://image.tmdb.org/t/p/original${movieData?.backdrop_path}`}
           />
         </div>
         <div className="flex flex-column p-2 desc-box">
