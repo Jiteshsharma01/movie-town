@@ -1,10 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MovieCard from "../MovieCard/MovieCard";
-import useInfiniteScroll from "../../utils/useInfiniteScroll";
-import axios from "axios";
-import { API_KEY, BASE_URL } from "../../utils/apiURL";
-import { useDispatch, useSelector } from "react-redux";
-import { addMovie } from "../../utils/movieSlice";
 
 export const MovieListShimmer = ({ cardsCount }) => {
   return (
@@ -28,10 +23,6 @@ const MovieList = ({
   movieYear,
   lastMovieElementRef,
   firstMovieElementRef,
-  limit,
-  skip,
-  yearWiseMovies,
-  setYearWiseMovies,
 }) => {
   const activeItem = JSON.parse(localStorage.getItem("activeGenre"));
   const [activeGenre, setActiveGenre] = useState(movieYear ?? activeItem?.name);

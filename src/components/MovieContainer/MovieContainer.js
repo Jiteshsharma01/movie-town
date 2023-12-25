@@ -13,17 +13,12 @@ const MovieContainer = () => {
 
   const movies = useSelector((store) => store?.movieList?.movieData);
   const filterMovies = useSelector((store) => store?.movieList?.filterData);
-  const movi = useSelector((store) => store?.movieList);
 
   const { loading, error, hasMore, movieList, yearWiseData } =
     useInfiniteScroll(limit, skip, movieYear);
 
   const [yearWiseMovies, setYearWiseMovies] = useState(movies ?? {});
   const [filteredMovies, setFilteredMovies] = useState(filterMovies ?? []);
-
-  // useEffect(() => {
-  //   setYearWiseMovies(yearWiseData);
-  // }, [yearWiseData]);
 
   useEffect(() => {
     let _data;
@@ -58,7 +53,7 @@ const MovieContainer = () => {
   );
 
   if (filteredMovies?.length === 0 && Object.keys(yearWiseMovies)?.length === 0)
-    return <h4 className="fs-16 my-3 ls-1">No movies found!!!</h4>;
+    return <h4 className="fs-16 my-3 ls-1 px-2">No movies found!!!</h4>;
 
   return (
     <div className="movie-container flex flex-column p-2">
@@ -68,14 +63,10 @@ const MovieContainer = () => {
             return (
               <MovieList
                 key={key}
-                movieYear={key}
-                limit={limit}
-                skip={skip}
-                yearWiseMovies={yearWiseMovies}
-                setYearWiseMovies={setYearWiseMovies}
-                firstMovieElementRef={firstMovieElementRef}
-                lastMovieElementRef={lastMovieElementRef}
                 movieList={yearWiseMovies[key]}
+                movieYear={key}
+                lastMovieElementRef={lastMovieElementRef}
+                firstMovieElementRef={firstMovieElementRef}
               />
             );
           })}

@@ -25,14 +25,13 @@ export default function useInfiniteScroll(limit, skip, movieYear) {
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
-        const movieData = {};
+        let movieData = {};
         if (!yearWiseData.hasOwnProperty(movieYear)) {
           movieData[movieYear] = [...res?.data?.results];
         }
-        setYearWiseData((prevData) => {
-          dispatch(addMovie({ ...prevData, ...movies, ...movieData }));
-          return { ...prevData, ...movieData };
-        });
+        movieData = {...yearWiseData, ...movieData};
+        setYearWiseData(movieData);
+        dispatch(addMovie(movieData));
         setHasMore(res?.data?.results?.length > 0);
         setLoading(false);
       })
