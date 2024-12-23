@@ -116,6 +116,19 @@ $clr-primary: #F0283C;
     &-26{font-size: 26px;}
 }
 
+/* line heights */
+.leading{
+  &-1{line-height: 11px;}
+  &-2{line-height: 14px;}
+  &-3{line-height: 16px;}
+  &-4{line-height: 18px;}
+  &-5{line-height: 20px;}
+  &-6{line-height: 22px;}
+  &-7{line-height: 24px;}
+  &-8{line-height: 26px;}
+  &-9{line-height: 30px;}
+}
+
 /* letter spacing */
 .ls-1{letter-spacing: 1px;}
 .ls-1h{letter-spacing: 0.5px;}

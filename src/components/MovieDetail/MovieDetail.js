@@ -25,7 +25,7 @@ const MovieDetail = () => {
 
   if (Object.keys(movieData)?.length === 0) return null;
   return (
-    <Link to={movieData?.homepage} className="text-white">
+    <Link to={movieData?.homepage} className="text-white movie-container">
       <div className="flex flex-column movie-detail-box w-full">
         <div className="p-1 img-box">
           <img
@@ -43,7 +43,7 @@ const MovieDetail = () => {
             />
           </div>
           <div className="flex flex-column ls-1 movie-desc">
-            <h3 className="movie-title ls-1">{movieData?.title}</h3>
+            <h3 className="fs-24 movie-title ls-1">{movieData?.title}</h3>
             <p className="flex genre-box">
               <span className="desc-head fw-6 ls-1">Release Year:</span>
               {new Date(movieData?.release_date).getFullYear()}
@@ -69,7 +69,7 @@ const MovieDetail = () => {
                   );
               })}
             </p>
-            <p className="overview-box">
+            <p className="leading-6 overview-box">
               <span className="desc-head fw-6 ls-1">Overview:</span>
               {movieData?.overview}
             </p>

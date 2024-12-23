@@ -1,24 +1,29 @@
-.movie-detail-box {
-  gap: 1rem;
-  .company-logo {
-    background: white;
-    height: fit-content;
-    padding: 2px 2px 0;
-  }
-  .desc-box {
+.movie-container{
+  text-decoration: none;
+  .movie-detail-box {
     gap: 1rem;
-    .movie-desc {
-      gap: 10px;
-      .genre-box,
-      .lang-box,
-      .overview-box {
-        font-size: 0.85rem;
-        span {
-          margin: 0 2px;
+    .company-logo {
+      background: white;
+      height: fit-content;
+      padding: 2px 2px 0;
+      width: 50vw;
+    }
+    .desc-box {
+      gap: 1rem;
+      .movie-desc {
+        font-size: 24px;
+        gap: 10px;
+        .genre-box,
+        .lang-box,
+        .overview-box {
+          font-size: 1rem;
+          span {
+            margin: 0 2px;
+          }
         }
-      }
-      .overview-box {
-        line-height: 15px;
+        .overview-box {
+          line-height: 22px;
+        }
       }
     }
   }
@@ -28,7 +33,6 @@
   .movie-detail-box {
     .img-box {
       position: absolute;
-      opacity: 0.4;
       height: 100vh;
       width: 100%;
       .movie-img {
