@@ -185,6 +185,16 @@ $clr-primary: #F0283C;
     &-6{margin-left: 60px; margin-right: 60px;}
 }
 
+/* overflow */
+.overflow {
+  &-y { overflow-y: auto; }
+  &-y-scroll { overflow-y: scroll; }
+  &-y-hide { overflow-y: hidden; }
+  &-x { overflow-x: auto; }
+  &-x-scroll { overflow-x: scroll; }
+  &-x-hide { overflow-x: hidden; }
+}
+
 /* width */
 .w {
   &-1 { width: 10%; }

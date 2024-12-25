@@ -6,7 +6,7 @@ const MainContainer = () => {
   return (
     <div className="main-container flex flex-column">
       <Header />
-      <div className="bg-dark2 text-white flex-auto">
+      <div className="bg-dark2 text-white flex-auto overflow-y-scroll">
         <MovieContainer />
       </div>
     </div>

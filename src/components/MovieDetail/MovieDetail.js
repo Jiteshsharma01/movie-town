@@ -25,7 +25,7 @@ const MovieDetail = () => {
 
   if (Object.keys(movieData)?.length === 0) return null;
   return (
-    <Link to={movieData?.homepage} className="text-white movie-container">
+    <Link to={movieData?.homepage} className="text-white movie-container" target="_blank" referrerPolicy="no-referrer">
       <div className="flex flex-column movie-detail-box w-full">
         <div className="p-1 img-box">
           <img

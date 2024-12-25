@@ -11,6 +11,7 @@ import { store } from "./utils/store";
 import { Provider } from "react-redux";
 import MovieDetail from "./components/MovieDetail/MovieDetail";
 import MovieDetailContainer from "./components/MovieContainer/MovieDetailContainer";
+import ResultContainer from "./components/ResultsContainer/ResultContainer";
 
 const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const appRouter = createBrowserRouter(
       <Route path={"movie"} element={<MovieDetailContainer />}>
         <Route path=":id" element={<MovieDetail />} />
       </Route>
+      <Route path={"results"} element={<ResultContainer />} />
     </Route>
   )
 );

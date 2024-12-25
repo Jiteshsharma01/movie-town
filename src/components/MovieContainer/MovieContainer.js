@@ -52,40 +52,38 @@ const MovieContainer = () => {
     [loading, hasMore]
   );
 
-  if (filteredMovies?.length === 0 && Object.keys(yearWiseMovies)?.length === 0)
-    return <h4 className="fs-16 my-3 ls-1 px-2">No movies found!!!</h4>;
+  // if (filteredMovies?.length === 0 && Object.keys(yearWiseMovies)?.length === 0)
+  //   return <h4 className="fs-16 my-3 ls-1 px-2">No movies found!!!</h4>;  
 
   return (
     <div className="movie-container flex flex-column p-2">
-      <>
-        {yearWiseMovies &&
-          Object.keys(yearWiseMovies)?.map((key) => {
-            return (
-              <MovieList
-                key={key}
-                movieList={yearWiseMovies[key]}
-                movieYear={key}
+      {yearWiseMovies &&
+        Object.keys(yearWiseMovies)?.map((key) => {
+          return (
+            <MovieList
+              key={key}
+              movieList={yearWiseMovies[key]}
+              movieYear={key}
+              lastMovieElementRef={lastMovieElementRef}
+              firstMovieElementRef={firstMovieElementRef}
+            />
+          );
+        })
+      }
+      {filteredMovies?.length > 0 &&
+        filteredMovies?.map((item, index) => {
+          return (
+            <div className="flex flex-column movie-list-box">
+              <h2 className="movie-year fs-20 my-3">Filter Movies</h2>
+              <FilterMovies
+                key={index}
                 lastMovieElementRef={lastMovieElementRef}
-                firstMovieElementRef={firstMovieElementRef}
+                movieList={filteredMovies}
               />
-            );
-          })}
-      </>
-      <>
-        {filteredMovies?.length > 0 &&
-          filteredMovies?.map((item, index) => {
-            return (
-              <div className="flex flex-column movie-list-box">
-                <h2 className="movie-year fs-20 my-3">Filter Movies</h2>
-                <FilterMovies
-                  key={index}
-                  lastMovieElementRef={lastMovieElementRef}
-                  movieList={filteredMovies}
-                />
-              </div>
-            );
-          })}
-      </>
+            </div>
+          );
+        })
+      }
       {loading &&
         filteredMovies?.length === 0 &&
         Object.keys(yearWiseMovies)?.length === 0 && (
