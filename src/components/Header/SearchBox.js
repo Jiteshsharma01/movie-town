@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchLogo from "../../assets/images/search-icon.png";
 import CancelIcon from "../../assets/images/cancel-icon.png";
 import "./Header.scss";
 import { useNavigate } from "react-router-dom";
 
-const SearchBox = () => {
+const SearchBox = ({onClear}) => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-
-  useEffect(() => {
-    const delay = 500;
-    const timerId = setTimeout(() => {
-      setDebouncedSearchTerm(searchText);
-    }, delay);
-    return () => clearTimeout(timerId);
-  }, [searchText]);
 
   const onChangeHandler = (event) => {
     setSearchText(event.target.value);
@@ -23,6 +14,11 @@ const SearchBox = () => {
 
   const redirectToSearch = (searchText) => {
     navigate(`/results?search_query=${searchText?.replaceAll(" ", "+")}`);
+  };
+  
+  const handleClear = () => {
+    setSearchText("");
+    onClear?.();
   };
 
   return (
@@ -37,7 +33,7 @@ const SearchBox = () => {
           <button
             className="cancel-btn"
             type="button"
-            onClick={() => setSearchText("")}
+            onClick={handleClear}
           >
             <img src={CancelIcon} alt="cancel-icon" className="cancel-img" />
           </button>

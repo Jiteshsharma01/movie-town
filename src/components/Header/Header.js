@@ -6,9 +6,10 @@ import "./Header.scss";
 import SearchBox from "./SearchBox";
 import { useDispatch } from "react-redux";
 import { addMovie, clearFilteredMovie, filterMovie } from "../../utils/movieSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [genreList, setGenresList] = useState([]);
   const [activeGenre, setActiveGenre] = useState({});
   const [selectedGenre, setSelectedGenre] = useState([]);
@@ -83,6 +84,12 @@ const Header = () => {
     }
   };
 
+  // Handle search input clear
+  const handleSearchClear = () => {
+    navigate(-1);
+    dispatch(clearFilteredMovie());
+  };
+
   // Initialize component
   useEffect(() => {
     setActiveGenre(initialGenreData);
@@ -97,7 +104,7 @@ const Header = () => {
         <Link to="/">
           <img src={AppLogo} alt="app-logo" />
         </Link>
-        <SearchBox />
+        <SearchBox onClear={handleSearchClear} />
       </div>
       <div className="genre-list-box">
         <button
