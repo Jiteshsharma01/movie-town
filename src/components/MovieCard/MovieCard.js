@@ -21,10 +21,10 @@ const MovieCard = ({ info }) => {
   };
 
   return (
-    <div className="movie-box" onClick={() => movieHandler(id)}>
+    <button className="movie-box" onClick={() => movieHandler(id)}>
       <img
         src={`https://image.tmdb.org/t/p/original${
-          poster_path ? poster_path : backdrop_path
+          poster_path || backdrop_path
         }`}
         loading="lazy"
         alt={title}
@@ -33,11 +33,11 @@ const MovieCard = ({ info }) => {
       <div className="movie-desc">
         <h3 className="movie-title">{title}</h3>
         <p className="movie-vote flex align-center">
-          {vote_average}
+          {vote_average.toFixed(2)}
           <img src={StarImg} alt="star-img" className="rating-img" />
         </p>
       </div>
-    </div>
+    </button>
   );
 };
 

@@ -35,13 +35,13 @@ const MovieDetail = () => {
           />
         </div>
         <div className="flex flex-column p-2 desc-box">
-          <div className="company-logo">
+          {movieData?.production_companies[0]?.logo_path && <div className="company-logo">
             <img
               alt="movie-img"
               className="movie-img w-full"
               src={`https://image.tmdb.org/t/p/original${movieData?.production_companies[0]?.logo_path}`}
             />
-          </div>
+          </div>}
           <div className="flex flex-column ls-1 movie-desc">
             <h3 className="fs-24 movie-title ls-1">{movieData?.title}</h3>
             <p className="flex genre-box">

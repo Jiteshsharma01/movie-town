@@ -47,18 +47,20 @@ const ResultContainer = () => {
   console.log({searchResult});
   
   return (
-    <div className="movie-container flex flex-column p-2">
-      {searchResult &&
-        Object.keys(searchResult)?.map((key) => {
-          return (
-            <MovieList
-              key={key}
-              movieList={searchResult[key]}
-              movieYear={key}
-            />
-          );
-        })
-      }
+    <div className="bg-dark2 text-white flex-auto overflow-y-scroll">
+      <div className="movie-container flex flex-column p-2">
+        {searchResult &&
+          Object.keys(searchResult)?.map((key) => {
+            return (
+              <MovieList
+                key={key}
+                movieList={searchResult[key]}
+                movieYear={key}
+              />
+            );
+          })
+        }
+      </div>
     </div>
   );
 };
